@@ -2,7 +2,6 @@ import React from 'react';
 import Webcam from 'react-webcam';
 import { withStyles } from '@material-ui/styles';
 import { Camera, DeleteForever, PhotoLibrary, Save, SwitchCamera } from '@material-ui/icons';
-import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { Grid, IconButton } from '@material-ui/core';
 
 const styles = () => ({
@@ -48,6 +47,7 @@ const CameraComponent = (props) => {
 	const [image, setImage] = React.useState("")
 	const [rearCamera, changeCam] = React.useState(false)
 
+	// capture
 	const capture = React.useCallback(
 		() => {
 			const imageSrc = webcamRef.current.getScreenshot();
@@ -55,10 +55,8 @@ const CameraComponent = (props) => {
 		},
 		[webcamRef]
 	);
-	const discard = () => {
-		setImage("")
-	}
 
+	// switch camera
 	console.log("width:" + window.innerWidth + "; height:" + window.innerHeight + "; rearCamera?" + rearCamera);
 	const videoConstraints = {
 		width: window.innerWidth,
@@ -69,6 +67,23 @@ const CameraComponent = (props) => {
 		console.log("onSwitchCamera");
 		changeCam(!rearCamera);
 	}
+
+	// discard image
+	const discard = () => {
+		setImage("")
+	}
+
+	// save image
+	const saveImage = () => {
+		var storedImages = JSON.parse(localStorage.getItem('gallery'));
+		if ((storedImages === null) || !(Array.isArray(storedImages))) {
+			storedImages = [];
+		}
+		storedImages.push(image);
+		localStorage.setItem('gallery', JSON.stringify(storedImages));
+		setImage("");
+	}
+
 	return (
 		<div className={classes.container}>
 			{ (image === "") ? (
@@ -107,7 +122,7 @@ const CameraComponent = (props) => {
 							<SwitchCamera fontSize='large' className={classes.icon} />
 						</IconButton>
 					) : (
-						<IconButton className={classes.iconButton} variant='contained'>
+						<IconButton className={classes.iconButton} variant='contained' onClick={saveImage}>
 							<Save fontSize='large' className={classes.icon} />
 						</IconButton>
 					)}
