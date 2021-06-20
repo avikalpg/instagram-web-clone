@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import CameraComponent from './views/camera';
 import Gallery from './views/gallery';
