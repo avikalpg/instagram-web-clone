@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles'
-import { GridList, GridListTile, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { GridList, GridListTile } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -22,7 +22,7 @@ const Gallery = (props) => {
 	const storedImages = JSON.parse(localStorage.getItem('gallery'));
 
 	return (
-		<React.Fragment className={classes.root}>
+		<div className={classes.root}>
 			<Link to="capture">Back to Camera</Link>
 			<GridList width={window.innerWidth} cellHeight={160} className={classes.gridList} cols={3}>
 				{storedImages.map((image, index) => (
@@ -31,7 +31,7 @@ const Gallery = (props) => {
 					</GridListTile>
 				))}
 			</GridList>
-		</React.Fragment>
+		</div>
 	)
 }
 
