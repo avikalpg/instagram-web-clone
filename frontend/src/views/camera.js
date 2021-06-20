@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import Webcam from 'react-webcam';
 import { withStyles } from '@material-ui/styles';
 import { Camera, DeleteForever, PhotoLibrary, Save, SwitchCamera } from '@material-ui/icons';
@@ -46,6 +47,7 @@ const CameraComponent = (props) => {
 	const webcamRef = React.useRef(null);
 	const [image, setImage] = React.useState("")
 	const [rearCamera, changeCam] = React.useState(false)
+	const history = useHistory();
 
 	// capture
 	const capture = React.useCallback(
@@ -84,9 +86,14 @@ const CameraComponent = (props) => {
 		setImage("");
 	}
 
+	// navigate to gallery
+	const goToGallery = () => {
+		history.push('/gallery')
+	}
+
 	return (
 		<div className={classes.container}>
-			{ (image === "") ? (
+			{(image === "") ? (
 				<Webcam
 					height={window.innerHeight}
 					width={window.innerWidth}
@@ -101,7 +108,7 @@ const CameraComponent = (props) => {
 			)}
 			<Grid container className={classes.bottomActionPanel}>
 				<Grid item xs={4} className={classes.iconGridItem}>
-					<IconButton className={classes.iconButton} variant='contained'>
+					<IconButton className={classes.iconButton} variant='contained' onClick={goToGallery}>
 						<PhotoLibrary fontSize='large' className={classes.icon} />
 					</IconButton>
 				</Grid>
